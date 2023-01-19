@@ -1,0 +1,32 @@
+- name: Deploy TrinityCoreDocker
+  hosts: prod
+  become: yes
+  tasks:
+  - name: Install software
+    package:
+      name: "{{ item }}"
+      state: latest
+    with_items:
+    - git
+    - docker.io
+    - docker-compose
+    - glances
+    - wget
+    - htop
+    - nano
+  - name: Create a directory if it does not exist
+    file:
+      path: /tmp/wow
+      state: directory
+      mode: '0755'
+      force: yes
+  - name: Clone a github repository
+    git:
+      repo: https://github.com/cbrgm/cmangos-docker
+      dest: /tmp/wow
+      clone: yes
+  - name: Docker Compose WoW Server Deployment
+    shell: 
+      cmd: |
+        cd /tmp/wow && docker-compose up -d
+          
