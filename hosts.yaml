@@ -1,4 +1,4 @@
   prod:
     hosts:
-      warcraft01:
-        ansible_host: 10.0.0.245
+      YOURSERVER:
+        ansible_host: 10.0.0.100
